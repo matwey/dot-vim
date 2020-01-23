@@ -18,3 +18,5 @@ function! LoadCscope()
 	endif
 endfunction
 au BufEnter /* call LoadCscope()
+
+let g:did_indent_on = 0
