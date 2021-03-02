@@ -1,6 +1,27 @@
 execute pathogen#infect()
+
+" enable syntax highlighting
+syntax on
+
+" show matching brackets
+set showmatch
+
+" get easier to use and more user friendly vim defaults
+set nocompatible
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Changed default required by SuSE security team--be aware if enabling this
+" that it potentially can open for malicious users to do harmful things.
+set nomodeline
+
+" enable 256 colors in vim
 set t_Co=256
+
+" always display the status line, even if only one window is displayed
 set laststatus=2
+
 let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
