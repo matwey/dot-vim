@@ -25,17 +25,31 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
-set tags=tags;/
-function! LoadCscope()
-	let db = findfile("cscope.out", ".;")
-	if (!empty(db))
-		let path = strpart(db, 0, match(db, "/cscope.out$"))
-		set nocscopeverbose " suppress 'duplicate connection' error
-		exe "cs add " . db . " " . path
-		set cscopeverbose
-		set csto=0
-	endif
-endfunction
-au BufEnter /* call LoadCscope()
 
 let g:did_indent_on = 0
+
+" Vim Language Server Protocol
+
+" pip install python-lsp-server
+if executable('pylsp')
+	au User lsp_setup call lsp#register_server({'name': 'pylsp', 'cmd': {server_info->['pylsp']}, 'allowlist': ['python']})
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+	setlocal omnifunc=lsp#complete
+	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+
+	nmap <buffer> gd <plug>(lsp-definition)
+	nmap <buffer> gr <plug>(lsp-references)
+	nmap <buffer> K <plug>(lsp-hover)
+endfunction
+
+augroup lsp_install
+	au!
+	au User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" Enable native lsp client support
+let g:lsp_use_native_client = has('patch-8.2.4780')
+" Delay milliseconds to highlight references.
+let g:lsp_document_highlight_delay = 1000

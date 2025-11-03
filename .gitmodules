@@ -7,3 +7,6 @@
 [submodule "bundle/vim-sleuth"]
 	path = pack/vendor/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
+[submodule "pack/vendor/start/vim-lsp"]
+	path = pack/vendor/start/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
