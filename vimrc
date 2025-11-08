@@ -35,6 +35,13 @@ if executable('pylsp')
 	au User lsp_setup call lsp#register_server({'name': 'pylsp', 'cmd': {server_info->['pylsp']}, 'allowlist': ['python']})
 endif
 
+let compile_commands = findfile('compile_commands.json', 'build;')
+if !empty(compile_commands) && executable('clangd')
+	let s:compile_commands_dir = fnamemodify(compile_commands, ':p:h')
+
+	au User lsp_setup call lsp#register_server({'name': 'clangd', 'cmd': {server_info->['clangd', '--background-index', '--compile-commands-dir=' . s:compile_commands_dir]}, 'allowlist': ['c', 'cpp', 'objc', 'objcpp']})
+endif
+
 function! s:on_lsp_buffer_enabled() abort
 	setlocal omnifunc=lsp#complete
 	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
@@ -53,3 +60,7 @@ augroup END
 let g:lsp_use_native_client = has('patch-8.2.4780')
 " Delay milliseconds to highlight references.
 let g:lsp_document_highlight_delay = 1000
+" Disable code action signs
+let g:lsp_document_code_action_signs_enabled = 0
+" Disable diagnostics signs
+let g:lsp_diagnostics_signs_enabled = 0
