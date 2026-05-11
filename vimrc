@@ -42,6 +42,7 @@ if !empty(compile_commands) && executable('clangd')
 	au User lsp_setup call lsp#register_server({'name': 'clangd', 'cmd': {server_info->['clangd', '--background-index', '--compile-commands-dir=' . s:compile_commands_dir]}, 'allowlist': ['c', 'cpp', 'objc', 'objcpp']})
 endif
 
+" pip install git+https://github.com/dcermak/rpm-spec-language-server
 if executable('rpm_lsp_server')
 	au User lsp_setup call lsp#register_server({'name': 'rpm_lsp_server', 'cmd': {server_info->['rpm_lsp_server', '--stdio']}, 'allowlist': ['spec']})
 endif
