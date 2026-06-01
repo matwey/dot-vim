@@ -47,6 +47,10 @@ if executable('rpm_lsp_server')
 	au User lsp_setup call lsp#register_server({'name': 'rpm_lsp_server', 'cmd': {server_info->['rpm_lsp_server', '--stdio']}, 'allowlist': ['spec']})
 endif
 
+if executable('neocmakelsp')
+	au User lsp_setup call lsp#register_server({'name': 'neocmakelsp', 'cmd': {server_info->['neocmakelsp', 'stdio']}, 'allowlist': ['cmake']})
+endif
+
 function! s:on_lsp_buffer_enabled() abort
 	setlocal omnifunc=lsp#complete
 	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
